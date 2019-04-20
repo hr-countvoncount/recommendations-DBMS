@@ -4,3 +4,4 @@ config
 .env
 package-lock.json
 recommendations.db 
+SDC_Database_MySQL.pem
