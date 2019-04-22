@@ -6,7 +6,7 @@ mysql = MysqlPoolBooster(mysql);
 let pool = mysql.createPool({
     host: 'localhost',
     user: 'root',
-password: 'root',
+    password: 'root',
     database: 'recs'
 });
 
@@ -45,50 +45,26 @@ async function save() {
     pool.query(`SET foreign_key_checks=0`)
     pool.query(`SET unique_checks=0`)
     pool.query(`SET sql_log_bin = 0`)
-    // pool.query(`SET SESSION tx_isolation='READ-UNCOMMITTED'`)
 
     pool.query(`LOAD DATA LOCAL INFILE 'data4.csv' 
 				INTO TABLE recommendations 
 				FIELDS TERMINATED BY ',' 
-                LINES TERMINATED BY '\n'
-                ;`, (err, result, fields) => {
+                                LINES TERMINATED BY '\n'`, (err, result, fields) => {
 
-        if (err) {
-            console.error('err on insert', err)
-        } 
-    var end = new Date() - start
-        console.log('took:  %dms', end)
-    })
-    pool.query(`SET foreign_key_checks=0`)
-    pool.query(`SET unique_checks=0`)
-
+   if (err) {
+     console.error('err on insert', err)
+     } 
+   })
 }
 
 
 let find = (id) => {
-
     pool.query(`select * from recommendations where id ='${id}'`, (err, res) => {
         console.log(res)
-
-    })
+  })
 }
 
-// find(9999999)
  for (let i = 0; i < 9; i++) {
-// // {
-// var start = new Date()
  save()
-//.then(()=> {
-//     var end = new Date() - start
-//     console.log('took:  %dms', end)
  }
-// console.log(process.memoryUsage());
-// var end = new Date() - start
-// console.log('took:  %dms', end)
 
-
-//  }
-// pool.query(`drop table recommendations`)
-// pool.query(`select * from recommendations where id = 99999`, (err, res)=>{
-//     console.log(res)
-// }) 
